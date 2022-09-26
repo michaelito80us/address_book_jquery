@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Address Book</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/4c052fe2af.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <nav class="nav-container containers">
+      <div style="position: relative">
+        <div class="magnifying-glass">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <input
+          type="text"
+          autofocus="false"
+          placeholder="Search"
+          class="search-area"
+        />
+      </div>
+      <div>
+        <span class="add-button" id="add-contact"
+          >Add <i class="fa-solid fa-plus"></i
+        ></span>
+      </div>
+    </nav>
+    <div class="overlay">
+      <form action="" class="contact-form">
+        <p>Contact details:</p>
+        <input
+          name="firstname"
+          placeholder="First Name"
+          class="form-input"
+          type="text"
+        />
+        <input
+          name="lastname"
+          placeholder="Last Name"
+          class="form-input"
+          type="text"
+        />
+        <input
+          name="phone"
+          placeholder="Phone Number"
+          class="form-input"
+          type="text"
+        />
+        <p style="margin-top: 1rem">Address:</p>
+        <input
+          name="street"
+          placeholder="Street"
+          class="form-input"
+          type="text"
+        />
+        <input name="city" placeholder="City" class="form-input" type="text" />
+        <input
+          name="country"
+          placeholder="Country"
+          class="form-input"
+          type="text"
+        />
+        <div style="display: flex">
+          <input type="submit" value="Add Contact" class="form-submit" />
+          <input type="reset" value="Cancel" class="form-cancel" />
+        </div>
+      </form>
+    </div>
+    <div class="contacts-container containers">
+      <h1>Contacts</h1>
+
+      <div id="contact-list">
+        <ul style="list-style: none"></ul>
+      </div>
+    </div>
+
+    <!-- <script>
+      var s =
+        '{"first_name" : "Sammy", "last_name" : "Shark", "location" : "Ocean"}';
+
+      var obj = JSON.parse(s);
+
+      document.getElementById("contact-list").innerHTML =
+        "Name: " +
+        obj.first_name +
+        " " +
+        obj.last_name +
+        "<br>" +
+        "Location: " +
+        obj.location;
+    </script> -->
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.js"
+      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+      crossorigin="anonymous"
+    ></script>
+    <script src="main.js"></script>
+  </body>
+</html>

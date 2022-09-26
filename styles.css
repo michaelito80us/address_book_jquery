@@ -177,3 +177,9 @@ label.error {
   border-radius: 5px;
   cursor: pointer;
 }
+
+#delete-contact {
+  margin-top: 1rem;
+  align-self: flex-end;
+  text-decoration: underline;
+}

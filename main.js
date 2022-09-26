@@ -5,6 +5,7 @@ $(document).ready(() => {
   const $containers = $(".containers");
   const $contactDetails = $("#contact-details");
   const $backButton = $("#back-button");
+  const $deleteContact = $("#delete-contact");
 
   // initial list of contacts to display (not in alphabetical order on purpose)
   let contacts = [
@@ -177,10 +178,22 @@ $(document).ready(() => {
       `${contacts[index].city}, ${contacts[index].state}`
     );
     $("#contact-details #contact-country").text(contacts[index].country);
+    $("#delete-contact").attr("data-index", index);
   });
 
   $backButton.on("click", () => {
     $contactDetails.hide();
     $containers.show();
+  });
+
+  $("#delete-contact").on("click", function () {
+    if (confirm("Are you sure you want to delete this contact?")) {
+      let index = $(this).data("index");
+      contacts.splice(index, 1);
+      $("#contact-list ul").empty();
+      $.fn.renderContactList(contacts);
+      $contactDetails.hide();
+      $containers.show();
+    }
   });
 });

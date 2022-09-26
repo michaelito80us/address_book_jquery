@@ -29,7 +29,6 @@ body {
   display: flex;
   align-items: center;
   width: 50vw;
-  /* background-color: #d9d9d9; */
   background-color: var(--secondary-bg-color);
   padding: 0.5rem 1rem 0.5rem 2rem;
   border-radius: 5px;
@@ -128,7 +127,6 @@ textarea {
 
 .form-cancel {
   border: none;
-  /* border: 1px solid var(--primary-text-color); */
   border-radius: 5px;
   padding: 0.5rem;
   cursor: pointer;

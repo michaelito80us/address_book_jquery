@@ -136,11 +136,11 @@ $(document).ready(() => {
       messages: {
         firstname: {
           required: "Please enter your first name",
-          minlength: "Name must consist of at least 2 characters",
+          minlength: "Name must have at least 2 characters",
         },
         lastname: {
           required: "Please enter your last name",
-          minlength: "Name must consist of at least 2 characters",
+          minlength: "Name must have at least 2 characters",
         },
       },
       submitHandler: function (form) {
@@ -164,6 +164,7 @@ $(document).ready(() => {
     });
   });
 
+  // go into a contact details
   $("#contact-list").on("click", "li", function () {
     let index = $(this).data("index");
     $containers.hide();
@@ -186,7 +187,7 @@ $(document).ready(() => {
     $containers.show();
   });
 
-  $("#delete-contact").on("click", function () {
+  $deleteContact.on("click", function () {
     if (confirm("Are you sure you want to delete this contact?")) {
       let index = $(this).data("index");
       contacts.splice(index, 1);

@@ -1,8 +1,10 @@
 $(document).ready(() => {
   const $addContact = $("#add-contact");
-  const $overlay = $(".overlay");
+  const $addContactForm = $("#add-contact-form");
   const $contactList = $("#contact-list");
   const $containers = $(".containers");
+  const $contactDetails = $("#contact-details");
+  const $backButton = $("#back-button");
 
   // initial list of contacts to display (not in alphabetical order on purpose)
   let contacts = [
@@ -12,6 +14,7 @@ $(document).ready(() => {
       phone: "123-123-1234",
       street: "123 Main St",
       city: "New York",
+      state: "NY",
       country: "USA",
     },
     {
@@ -20,6 +23,7 @@ $(document).ready(() => {
       phone: "888-888-8888",
       street: "Calle del Portal",
       city: "Mexico City",
+      state: "Mexico",
       country: "Mexico",
     },
     {
@@ -27,7 +31,8 @@ $(document).ready(() => {
       lastName: "Barajas",
       phone: "888-888-8888",
       street: "Calle del Portal",
-      city: "Mexico City",
+      city: "Shanghai",
+      state: "SH",
       country: "Mexico",
     },
   ];
@@ -58,7 +63,7 @@ $(document).ready(() => {
     $.fn.renderContactList = function (contacts) {
       contacts.map((contact, index) => {
         $("#contact-list ul").append(() => {
-          return `<li data-filter-item data-index-${index} data-firstname="${contact.firstName.toLowerCase()}" data-lastname="${contact.lastName.toLowerCase()}" class="contact-item separator">${
+          return `<li data-filter-item data-index="${index}" data-firstname="${contact.firstName.toLowerCase()}" data-lastname="${contact.lastName.toLowerCase()}" class="contact-item separator">${
             contact.firstName
           } ${contact.lastName}</li>`;
         });
@@ -72,7 +77,7 @@ $(document).ready(() => {
 
   // Add contact form - hides the rest of the page and shows the form
   $addContact.on("click", () => {
-    $overlay.show();
+    $addContactForm.show();
     $containers.hide();
     $("#new-contact-form").trigger("reset");
   });
@@ -110,10 +115,11 @@ $(document).ready(() => {
 
   $("#new-contact-form .form-cancel").on("click", function (e) {
     e.preventDefault();
-    $overlay.hide();
+    $addContactForm.hide();
     $containers.show();
   });
 
+  // handles the form submission and validations
   $(function () {
     $("#new-contact-form").validate({
       rules: {
@@ -128,22 +134,22 @@ $(document).ready(() => {
       },
       messages: {
         firstname: {
-          required: "Please enter your name",
+          required: "Please enter your first name",
           minlength: "Name must consist of at least 2 characters",
         },
-        lasttname: {
-          required: "Please enter your name",
+        lastname: {
+          required: "Please enter your last name",
           minlength: "Name must consist of at least 2 characters",
         },
       },
       submitHandler: function (form) {
-        console.log({ form });
         let newContact = {
           firstName: $("#firstname").val(),
           lastName: $("#lastname").val(),
           phone: $("#phone").val() || "",
           street: $("#street").val() || "",
           city: $("#city").val() || "",
+          state: $("#state").val() || "",
           country: $("#country").val() || "",
         };
         $("#contact-list ul").empty();
@@ -151,9 +157,30 @@ $(document).ready(() => {
         contacts.push(newContact);
         contacts = $.fn.sortContacts(contacts);
         $.fn.renderContactList(contacts);
-        $overlay.hide();
+        $addContactForm.hide();
         $containers.show();
       },
     });
+  });
+
+  $("#contact-list").on("click", "li", function () {
+    let index = $(this).data("index");
+    $containers.hide();
+
+    $contactDetails.show();
+    $("#contact-details #contact-name").text(
+      `${contacts[index].firstName} ${contacts[index].lastName}`
+    );
+    $("#contact-details #contact-phone").text(contacts[index].phone);
+    $("#contact-details #contact-street").text(contacts[index].street);
+    $("#contact-details #contact-city").text(
+      `${contacts[index].city}, ${contacts[index].state}`
+    );
+    $("#contact-details #contact-country").text(contacts[index].country);
+  });
+
+  $backButton.on("click", () => {
+    $contactDetails.hide();
+    $containers.show();
   });
 });

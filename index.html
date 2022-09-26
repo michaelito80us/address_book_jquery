@@ -37,7 +37,7 @@
     </nav>
 
     <!-- new contact form -->
-    <div class="overlay">
+    <div class="overlay" id="add-contact-form">
       <form action="#" class="contact-form" id="new-contact-form">
         <p>Contact details:</p>
         <input
@@ -56,6 +56,7 @@
           type="text"
           value=""
         />
+        <p style="margin-top: 1rem">Phone:</p>
         <input
           id="phone"
           name="phone"
@@ -82,6 +83,14 @@
           value=""
         />
         <input
+          id="state"
+          name="state"
+          placeholder="State"
+          class="form-input"
+          type="text"
+          value=""
+        />
+        <input
           id="country"
           name="country"
           placeholder="Country"
@@ -89,7 +98,13 @@
           type="text"
           value=""
         />
-        <div style="display: flex; justify-content: space-between">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+          "
+        >
           <input type="submit" value="Add Contact" class="form-submit" />
           <input type="reset" value="Cancel" class="hidden" />
           <input type="button" value="Cancel" class="form-cancel" />
@@ -107,6 +122,24 @@
     </div>
 
     <!-- contact details -->
+    <div class="overlay" id="contact-details">
+      <div id="back-button">Back</div>
+      <div class="contact-details">
+        <h1 id="contact-name" style="margin-bottom: 1.25rem"></h1>
+        <!-- <div class="contact-details-body"> -->
+        <div class="contact-detail-item">
+          <p style="font-size: x-small; margin-bottom: 0.1rem">Phone</p>
+          <p id="contact-phone"></p>
+        </div>
+        <div class="contact-detail-item">
+          <p style="font-size: x-small; margin-bottom: 0.1rem">Address</p>
+          <p id="contact-street"></p>
+          <p id="contact-city"></p>
+          <p id="contact-country"></p>
+        </div>
+        <!-- </div> -->
+      </div>
+    </div>
 
     <script
       src="https://code.jquery.com/jquery-3.6.1.js"

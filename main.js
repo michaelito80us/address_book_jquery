@@ -4,7 +4,7 @@ $(document).ready(() => {
   const $contactList = $("#contact-list");
   const $containers = $(".containers");
 
-  // initial list of contacts to display
+  // initial list of contacts to display (not in alphabetical order on purpose)
   let contacts = [
     {
       firstName: "John",
@@ -32,7 +32,7 @@ $(document).ready(() => {
     },
   ];
 
-  // function to sort contacts alphabetically into the array of contacts
+  // function to sort contacts alphabetically into the array of contacts - will be called everytime a new contact is created
   (function ($) {
     $.fn.sortContacts = function (contacts) {
       contacts.sort((a, b) => {
@@ -50,12 +50,22 @@ $(document).ready(() => {
     };
   })(jQuery);
 
-  $.fn.sortContacts(contacts).map((contact, index) => {
-    $("#contact-list ul").append(() => {
-      return `<li data-filter-tem data-index-${index} class="contact-item">${contact.firstName} ${contact.lastName}</li>
+  (function ($) {
+    $.fn.renderContactList = function (contacts) {
+      contacts.map((contact, index) => {
+        $("#contact-list ul").append(() => {
+          return `<li data-filter-item data-index-${index} data-firstname=${contact.firstName.toLowerCase()} data-lastname=${contact.lastName.toLowerCase()} class="contact-item">${
+            contact.firstName
+          } ${contact.lastName}</li>
       <div class="separator"> </div>`;
-    });
-  });
+        });
+      });
+    };
+  })(jQuery);
+
+  // sort contacts first time the app loads and then render the list
+  contacts = $.fn.sortContacts(contacts);
+  $.fn.renderContactList(contacts);
 
   // Add contact form - hides the rest of the page and shows the form
   $addContact.on("click", () => {
@@ -67,12 +77,28 @@ $(document).ready(() => {
   $(".search-area").on("keyup", function () {
     let searchItem = $(this).val();
     console.log({ searchItem });
+    let filterItems = $contactList.find("[data-filter-item]");
+    console.log({ filterItems });
 
     // filters the contacts based on the search bar
     if (searchItem !== "") {
-      // filter items from my contacts object
+      // find the contacts that match the search bar - first name or last name
+      filterItems
+        .addClass("hidden")
+        .filter((item) => {
+          return (
+            $(filterItems[item])
+              .data("firstname")
+              .indexOf(searchItem.toLowerCase()) === 0 ||
+            $(filterItems[item])
+              .data("lastname")
+              .indexOf(searchItem.toLowerCase()) === 0
+          );
+        })
+        .removeClass("hidden");
     } else {
       // show all contacts
+      filterItems.removeClass("hidden");
     }
   });
 });

@@ -35,60 +35,85 @@
         ></span>
       </div>
     </nav>
+
+    <!-- new contact form -->
     <div class="overlay">
-      <form action="" class="contact-form">
+      <form action="#" class="contact-form" id="new-contact-form">
         <p>Contact details:</p>
         <input
+          id="firstname"
           name="firstname"
           placeholder="First Name"
           class="form-input"
           type="text"
+          value=""
         />
         <input
+          id="lastname"
           name="lastname"
           placeholder="Last Name"
           class="form-input"
           type="text"
+          value=""
         />
         <input
+          id="phone"
           name="phone"
           placeholder="Phone Number"
           class="form-input"
-          type="text"
+          type="tel"
+          value=""
         />
         <p style="margin-top: 1rem">Address:</p>
         <input
+          id="street"
           name="street"
           placeholder="Street"
           class="form-input"
           type="text"
+          value=""
         />
-        <input name="city" placeholder="City" class="form-input" type="text" />
         <input
+          id="city"
+          name="city"
+          placeholder="City"
+          class="form-input"
+          type="text"
+          value=""
+        />
+        <input
+          id="country"
           name="country"
           placeholder="Country"
           class="form-input"
           type="text"
+          value=""
         />
-        <div style="display: flex">
+        <div style="display: flex; justify-content: space-between">
           <input type="submit" value="Add Contact" class="form-submit" />
-          <input type="reset" value="Cancel" class="form-cancel" />
+          <input type="reset" value="Cancel" class="hidden" />
+          <input type="button" value="Cancel" class="form-cancel" />
         </div>
       </form>
     </div>
+
+    <!-- contact display -->
     <div class="contacts-container containers">
       <h1>Contacts</h1>
-
       <div id="contact-list">
         <ul style="list-style: none"></ul>
       </div>
+      <div class="no-results hidden">No Results</div>
     </div>
+
+    <!-- contact details -->
 
     <script
       src="https://code.jquery.com/jquery-3.6.1.js"
       integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
     <script src="main.js"></script>
   </body>
 </html>

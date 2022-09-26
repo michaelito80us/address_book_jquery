@@ -19,13 +19,10 @@ body {
 .nav-container {
   padding: 1rem;
   background-color: var(--primary-bg-color);
-  /* display: flex; */
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* justify-content: space-between; */
   align-items: center;
   justify-items: end;
-  /* height: 30px; */
 }
 
 .search-area {
@@ -80,9 +77,9 @@ textarea {
 }
 
 .contact-form {
-  width: 50vw;
+  width: 80vw;
   background-color: var(--secondary-bg-color);
-  margin-left: 20vw;
+  margin: 0 auto;
 }
 
 .contacts-container {
@@ -90,6 +87,7 @@ textarea {
 }
 
 .form-input {
+  box-sizing: border-box;
   width: 100%;
   border: none;
   padding: 0.5rem 2rem 0.5rem 0.5rem;
@@ -106,8 +104,41 @@ textarea {
 
 .contact-item {
   padding: 0.75rem 0;
+  text-transform: capitalize;
 }
 
 .separator {
   border-bottom: 1px solid #d9d9d9;
+}
+
+.no-results {
+  padding: 2rem;
+  text-align: center;
+}
+
+.form-submit {
+  background-color: var(--primary-bg-color);
+  color: var(--secondary-bg-color);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-cancel {
+  border: 1px solid var(--primary-text-color);
+  border-radius: 10px;
+  padding: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+label.error {
+  color: red;
+  font-size: small;
+  margin-top: -0.5rem;
+}
+
+.form-input.error {
+  border: 1px solid red;
 }

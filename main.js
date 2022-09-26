@@ -36,14 +36,18 @@ $(document).ready(() => {
   (function ($) {
     $.fn.sortContacts = function (contacts) {
       contacts.sort((a, b) => {
-        if (a.firstName !== b.firstName) {
-          return a.firstName > b.firstName
+        if (a.firstName.toLowerCase() !== b.firstName.toLowerCase()) {
+          return a.firstName.toLowerCase() > b.firstName.toLowerCase()
             ? 1
-            : b.firstName > a.firstName
+            : b.firstName.toLowerCase() > a.firstName.toLowerCase()
             ? -1
             : 0;
         } else {
-          return a.lastName > b.lastName ? 1 : b.lastName > a.lastName ? -1 : 0;
+          return a.lastName.toLowerCase() > b.lastName.toLowerCase()
+            ? 1
+            : b.lastName.toLowerCase() > a.lastName.toLowerCase()
+            ? -1
+            : 0;
         }
       });
       return contacts;
@@ -54,11 +58,9 @@ $(document).ready(() => {
     $.fn.renderContactList = function (contacts) {
       contacts.map((contact, index) => {
         $("#contact-list ul").append(() => {
-          return `<li data-filter-item data-index-${index} data-firstname=${contact.firstName.toLowerCase()} data-lastname=${contact.lastName.toLowerCase()} data-fullname="${contact.firstName.toLowerCase()} ${contact.lastName.toLowerCase()}" class="contact-item">${
+          return `<li data-filter-item data-index-${index} data-firstname="${contact.firstName.toLowerCase()}" data-lastname="${contact.lastName.toLowerCase()}" class="contact-item separator">${
             contact.firstName
-          } ${
-            contact.lastName
-          }</li> <div data-filter-item data-firstname=${contact.firstName.toLowerCase()} data-lastname=${contact.lastName.toLowerCase()} data-fullname="${contact.firstName.toLowerCase()} ${contact.lastName.toLowerCase()}" class="separator"> </div>`;
+          } ${contact.lastName}</li>`;
         });
       });
     };
@@ -72,38 +74,86 @@ $(document).ready(() => {
   $addContact.on("click", () => {
     $overlay.show();
     $containers.hide();
+    $("#new-contact-form").trigger("reset");
   });
 
   // handles the search bar
   $(".search-area").on("keyup", function () {
     let searchItem = $(this).val();
-    console.log({ searchItem });
     let filterItems = $contactList.find("[data-filter-item]");
-    console.log({ filterItems });
 
     // filters the contacts based on the search bar
     if (searchItem !== "") {
       // find the contacts that match the search bar - first name or last name
-      filterItems
+      let shortlist = filterItems
         .addClass("hidden")
         .filter((item) => {
-          console.log(filterItems[item]);
           return (
             $(filterItems[item])
               .data("firstname")
               .indexOf(searchItem.toLowerCase()) === 0 ||
             $(filterItems[item])
               .data("lastname")
-              .indexOf(searchItem.toLowerCase()) === 0 ||
-            $(filterItems[item])
-              .data("fullname")
               .indexOf(searchItem.toLowerCase()) === 0
           );
         })
         .removeClass("hidden");
+
+      // if there are no contacts that match the search bar, show the message
+      shortlist.length === 0 && $(".no-results").show();
     } else {
       // show all contacts
       filterItems.removeClass("hidden");
+      $(".no-results").hide();
     }
+  });
+
+  $("#new-contact-form .form-cancel").on("click", function (e) {
+    e.preventDefault();
+    $overlay.hide();
+    $containers.show();
+  });
+
+  $(function () {
+    $("#new-contact-form").validate({
+      rules: {
+        firstname: {
+          required: true,
+          minlength: 2,
+        },
+        lastname: {
+          required: true,
+          minlength: 2,
+        },
+      },
+      messages: {
+        firstname: {
+          required: "Please enter your name",
+          minlength: "Name must consist of at least 2 characters",
+        },
+        lasttname: {
+          required: "Please enter your name",
+          minlength: "Name must consist of at least 2 characters",
+        },
+      },
+      submitHandler: function (form) {
+        console.log({ form });
+        let newContact = {
+          firstName: $("#firstname").val(),
+          lastName: $("#lastname").val(),
+          phone: $("#phone").val() || "",
+          street: $("#street").val() || "",
+          city: $("#city").val() || "",
+          country: $("#country").val() || "",
+        };
+        $("#contact-list ul").empty();
+        $(".no-results").hide();
+        contacts.push(newContact);
+        contacts = $.fn.sortContacts(contacts);
+        $.fn.renderContactList(contacts);
+        $overlay.hide();
+        $containers.show();
+      },
+    });
   });
 });

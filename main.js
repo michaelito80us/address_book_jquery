@@ -54,10 +54,11 @@ $(document).ready(() => {
     $.fn.renderContactList = function (contacts) {
       contacts.map((contact, index) => {
         $("#contact-list ul").append(() => {
-          return `<li data-filter-item data-index-${index} data-firstname=${contact.firstName.toLowerCase()} data-lastname=${contact.lastName.toLowerCase()} class="contact-item">${
+          return `<li data-filter-item data-index-${index} data-firstname=${contact.firstName.toLowerCase()} data-lastname=${contact.lastName.toLowerCase()} data-fullname="${contact.firstName.toLowerCase()} ${contact.lastName.toLowerCase()}" class="contact-item">${
             contact.firstName
-          } ${contact.lastName}</li>
-      <div class="separator"> </div>`;
+          } ${
+            contact.lastName
+          }</li> <div data-filter-item data-firstname=${contact.firstName.toLowerCase()} data-lastname=${contact.lastName.toLowerCase()} data-fullname="${contact.firstName.toLowerCase()} ${contact.lastName.toLowerCase()}" class="separator"> </div>`;
         });
       });
     };
@@ -86,12 +87,16 @@ $(document).ready(() => {
       filterItems
         .addClass("hidden")
         .filter((item) => {
+          console.log(filterItems[item]);
           return (
             $(filterItems[item])
               .data("firstname")
               .indexOf(searchItem.toLowerCase()) === 0 ||
             $(filterItems[item])
               .data("lastname")
+              .indexOf(searchItem.toLowerCase()) === 0 ||
+            $(filterItems[item])
+              .data("fullname")
               .indexOf(searchItem.toLowerCase()) === 0
           );
         })

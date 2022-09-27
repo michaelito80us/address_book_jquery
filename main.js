@@ -135,11 +135,11 @@ $(document).ready(() => {
       },
       messages: {
         firstname: {
-          required: "Please enter your first name",
+          required: "Please enter a first name",
           minlength: "Name must have at least 2 characters",
         },
         lastname: {
-          required: "Please enter your last name",
+          required: "Please enter a last name",
           minlength: "Name must have at least 2 characters",
         },
       },

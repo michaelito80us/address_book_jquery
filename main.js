@@ -165,7 +165,7 @@ $(document).ready(() => {
   });
 
   // go into a contact details
-  $("#contact-list").on("click", "li", function () {
+  $contactList.on("click", "li", function () {
     let index = $(this).data("index");
     $containers.hide();
 
@@ -187,9 +187,10 @@ $(document).ready(() => {
     $containers.show();
   });
 
+  // delete a contact
   $deleteContact.on("click", function () {
     if (confirm("Are you sure you want to delete this contact?")) {
-      let index = $(this).data("index");
+      let index = $(this).attr("data-index");
       contacts.splice(index, 1);
       $("#contact-list ul").empty();
       $.fn.renderContactList(contacts);
